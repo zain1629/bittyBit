@@ -28,19 +28,32 @@ function LandingPage() {
   const generateUrl = async (e) => {
 
     let uri = document.getElementById('url').value;
-    console.log(uri);
-    // Send URL to get get encoded
-    await fetch("http://localhost:5000/url/", {
-      method: 'POST',
-      body: {url:uri}
-    }).then(result => {
-     return result.text()
-    }).then(res => {
-      console.log(res);
-      document.getElementById('generated').value = ""
-    })
+
+    if(uri === ""){
+      alert("No URL entered")
+    }
+
+    else{
+         var formBody = []
+
+  
+        formBody.push("url" + "=" + encodeURIComponent(uri));
+          console.log(uri);
+          // Send URL to get get encoded
+          await fetch("http://localhost:5000/url/", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            },
+            body: formBody
+          }).then(result => {
+          return result.text()
+          }).then(res => {
+            console.log(res);
+            document.getElementById('generated').value = "http://localhost:5000/url/"+res;
+          })
     
-    
+    }
 
   }
 

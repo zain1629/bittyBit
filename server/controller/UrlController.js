@@ -13,6 +13,7 @@ exports.getGeneratedUrl = function (req,res){
     .then((result)=>{
       if(result.length >=1){
          console.log("Data Exists")
+         getGeneratedUrl();
       }
       else{
          model.createUrl(url,key);
