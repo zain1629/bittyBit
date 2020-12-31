@@ -1,0 +1,21 @@
+{
+    "dev":{
+        "database":{
+            "host" : "bittybit.cvcdffjzf0mr.us-east-1.rds.amazonaws.com",
+            "user" : "admin",
+            "pass" : "12345678",
+            "db"   : "sys"
+        }
+    },
+
+    "qa" : {
+        "database":{
+            "host" : "",
+            "user" : "",
+            "pass" : "",
+            "db"   : "sys"
+        }
+    }
+
+    
+}
