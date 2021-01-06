@@ -4,6 +4,8 @@ const open = require('open');
 
 exports.getGeneratedUrl = function (req,res){
     let url = req.body.url;
+    console.log("data "+res.body);
+    console.log("url " + url);
 
     let size = getRandomInt(3,9);
     let key  =  makeid(size);

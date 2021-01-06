@@ -29,15 +29,20 @@ function LandingPage() {
 
     let uri = document.getElementById('url').value;
     console.log(uri);
-    // Send URL to get get encoded
+    let data = new URLSearchParams();
+    data.append("url",uri);
+    // Send URL to get encoded
     await fetch("http://localhost:5000/url/", {
       method: 'POST',
-      body: {url:uri}
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: data
     }).then(result => {
      return result.text()
     }).then(res => {
       console.log(res);
-      document.getElementById('generated').value = ""
+      document.getElementById('generated').value = "http://localhost:5000/bittyBit/" + res ; 
     })
     
     
