@@ -28,30 +28,23 @@ function LandingPage() {
   const generateUrl = async (e) => {
 
     let uri = document.getElementById('url').value;
-
-    if(uri === ""){
-      alert("No URL entered")
-    }
-
-    else{
-         var formBody = []
-
-  
-        formBody.push("url" + "=" + encodeURIComponent(uri));
-          console.log(uri);
-          // Send URL to get get encoded
-          await fetch("http://localhost:5000/url/", {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body: formBody
-          }).then(result => {
-          return result.text()
-          }).then(res => {
-            console.log(res);
-            document.getElementById('generated').value = "http://localhost:5000/url/"+res;
-          })
+    console.log(uri);
+    let data = new URLSearchParams();
+    data.append("url",uri);
+    // Send URL to get encoded
+    await fetch("http://localhost:5000/url/", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: data
+    }).then(result => {
+     return result.text()
+    }).then(res => {
+      console.log(res);
+      document.getElementById('generated').value = "http://localhost:5000/bittyBit/" + res ; 
+    })
+    
     
     }
 
