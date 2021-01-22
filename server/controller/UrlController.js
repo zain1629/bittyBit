@@ -1,7 +1,7 @@
-const model = require("../models/Model");
+const querry = require("../db/querries");
 const open = require('open');
 
-
+// Generate and returns shortened URL
 exports.getGeneratedUrl = function (req,res){
     let url = req.body.url;
     console.log("data "+res.body);
@@ -11,27 +11,26 @@ exports.getGeneratedUrl = function (req,res){
     let key  =  makeid(size);
     //let encodedUrl = encodeURIComponent(url);
     
-    model.checkDuplicate(key)
+    querry.checkDuplicate(key)
     .then((result)=>{
       if(result.length >=1){
          console.log("Data Exists")
          getGeneratedUrl();
       }
       else{
-         model.createUrl(url,key);
+         querry.createUrl(url,key);
       }
     })
     .catch(console.log("No Data"))
-   // model.createUrl(url,key);
 
     console.log(key);
     res.send(key);
 }
 
+// Open the original URL
 exports.getUrl = function (req,res){
-
    const token = req.params.token;
-   const url =  model.getUrl(token)
+   const url =  querry.getUrl(token)
    .then((result) => {
       open(result[0].original_url);
      // res.send(result[0].original_url);
@@ -39,6 +38,7 @@ exports.getUrl = function (req,res){
 }
 
 
+// Create a key to replace URL with
 const makeid = (length) => {
     var result           = '';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

@@ -9,28 +9,27 @@ import {
   InputGroup,
   Container,
   CardBody,
-  Card,
-  Row,
-  Col,
+  Card
 } from "reactstrap";
 
 // core components
 import LandingPageNavbar from "../components/Navbar";
-import LandingPageHeader from "../components/Header";
-import DefaultFooter from "../components/Footer";
-import CreateUrl from "../actions/actions";
+import {useSelector,useDispatch} from "react-redux"
 
 function LandingPage() {
-  const [firstFocus, setFirstFocus] = React.useState(false);
-  const [lastFocus, setLastFocus] = React.useState(false);
+
+  const {data,loading} = useSelector((state)=>{
+    return state
+  })
+  const dispatch =  useDispatch();
 
 
   const generateUrl = async (e) => {
 
     let uri = document.getElementById('url').value;
-    console.log(uri);
     let data = new URLSearchParams();
     data.append("url",uri);
+    
     // Send URL to get encoded
     await fetch("http://localhost:5000/url/", {
       method: 'POST',
@@ -42,28 +41,18 @@ function LandingPage() {
      return result.text()
     }).then(res => {
       console.log(res);
+      dispatch({type:"GET_URL",payload:res});
+      dispatch({type:"SET_LOADING",payload:false});
       document.getElementById('generated').value = "http://localhost:5000/bittyBit/" + res ; 
     })
     
     
     }
 
-  }
-
- 
 
 
-  React.useEffect(() => {
-    document.body.classList.add("landing-page");
-    document.body.classList.add("sidebar-collapse");
-    document.documentElement.classList.remove("nav-open");
-    window.scrollTo(0, 0);
-    document.body.scrollTop = 0;
-    return function cleanup() {
-      document.body.classList.remove("landing-page");
-      document.body.classList.remove("sidebar-collapse");
-    };
-  }, []);
+
+
   return (
     <>  
      <LandingPageNavbar />
